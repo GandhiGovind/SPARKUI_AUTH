@@ -107,7 +107,7 @@ public class LDAPUserAuthentication {
 	private String getUserName(String userID, LdapContext ctx,
 			SearchControls searchControls) {
 		System.out.println("userID: " + userID);
-		String baseDN = "ou=users,o=standardchartered";
+		String baseDN = "ou=users,o=<org>";
 		String name = "";
 		try {
 			NamingEnumeration<SearchResult> answer;
