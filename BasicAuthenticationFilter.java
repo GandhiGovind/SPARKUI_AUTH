@@ -1,7 +1,7 @@
 package com.test.sparui;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 import javax.servlet.Filter;
@@ -18,7 +18,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class BasicAuthenticationFilter implements Filter {
 
 	/** Logger */
@@ -29,15 +28,15 @@ public class BasicAuthenticationFilter implements Filter {
 	private String password = "";
 
 	private String realm = "Protected";
+	private String[] usernames = null;
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		username = filterConfig.getInitParameter("username");
 		password = filterConfig.getInitParameter("password");
 		String paramRealm = filterConfig.getInitParameter("realm");
-		String[] username = param.split(",");
-		
-		
+		usernames = username.split(",");
+
 		/*
 		 * StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 		 * encryptor.setPassword("ocbc-inalap");
@@ -70,27 +69,23 @@ public class BasicAuthenticationFilter implements Filter {
 						if (p != -1) {
 							String _username = credentials.substring(0, p).trim();
 							String _password = credentials.substring(p + 1).trim();
-							if (_username.equals("admin"))
-							{   
+							if (_username.equals("admin")) {
 								if (!username.equals(_username) || !password.equals(_password)) {
 									unauthorized(response, "Bad credentials");
+								}
+							} else {
+								if (Arrays.asList(usernames).contains(_username)) {
+									LDAPUserAuthentication ldapUserAuthentication = new LDAPUserAuthentication();
+									String status = ldapUserAuthentication.authenticateUser(_username, _password);
+									if (!status.equalsIgnoreCase("SUCCESS")) {
+										unauthorized(response, "Bad credentials");
 									}
-							}
-							else{
-								if (authIds.contains(_username))
-								{
-							LDAPUserAuthentication ldapUserAuthentication=new LDAPUserAuthentication()
-							String status=ldapUserAuthentication.authenticateUser(_username,_password);
-							if (!status.equalsIgnoreCase("SUCCESS"))
-							{
-							unauthorized(response, "Bad credentials");
-							}
-							}
+								}
 							}
 							if (!username.contains(_username) || !password.equals(_password)) {
 								unauthorized(response, "Bad credentials");
 							}
-							
+
 							filterChain.doFilter(servletRequest, servletResponse);
 						} else {
 							unauthorized(response, "Invalid authentication token");
@@ -119,3 +114,4 @@ public class BasicAuthenticationFilter implements Filter {
 	}
 
 }
+
