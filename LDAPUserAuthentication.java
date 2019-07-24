@@ -19,7 +19,7 @@ import javax.naming.ldap.LdapContext;
 import org.apache.log4j.Logger;
 
 
-import com.scb.clairvoyant.util.SPARKUIConstant;
+import com.test.util.SPARKUIConstant;
 
 public class LDAPUserAuthentication {
 	Logger log = Logger.getLogger(LDAPUserAuthentication.class);
@@ -28,7 +28,7 @@ public class LDAPUserAuthentication {
 		String strUrl = "success";
 		String name = "";
 		System.setProperty("javax.net.ssl.trustStore",
-				ClairvoyantConstant.LDAP_CERTIFICATION_PATH);
+				SPARKUIConstant.LDAP_CERTIFICATION_PATH);
 		Hashtable env = new Hashtable(11);
 		boolean b = false;
 		int count = 0;
