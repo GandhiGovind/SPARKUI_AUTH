@@ -1,3 +1,4 @@
+package com.test.sparkui;
 import java.util.Hashtable;
 import java.util.Properties;
 
