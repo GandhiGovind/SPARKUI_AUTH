@@ -41,7 +41,7 @@ public class LDAPUserAuthentication {
 			// env.put(Context.SECURITY_AUTHENTICATION, "simple");
 			// env.put(Context.SECURITY_PRINCIPAL, "uid=<userid>");
 			env.put(Context.SECURITY_PRINCIPAL, "cn=" + username
-					+ ",ou=users,o=standardchartered");
+					+ ",ou=users,o=<OrgName>");
 			env.put(Context.SECURITY_CREDENTIALS, password);
 			env.put("com.sun.jndi.ldap.connect.timeout", "8000");
 			try {
