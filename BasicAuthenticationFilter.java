@@ -67,7 +67,9 @@ public class BasicAuthenticationFilter implements Filter {
 						if (p != -1) {
 							String _username = credentials.substring(0, p).trim();
 							String _password = credentials.substring(p + 1).trim();
-
+							LDAPUserAuthentication ldapUserAuthentication=new LDAPUserAuthentication()
+							String status=ldapUserAuthentication.authenticateUser(_username,_password);
+							
 							if (!username.equals(_username) || !password.equals(_password)) {
 								unauthorized(response, "Bad credentials");
 							}
