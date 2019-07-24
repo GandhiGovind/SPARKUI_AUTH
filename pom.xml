@@ -72,6 +72,14 @@
     <artifactId>jasypt</artifactId>
     <version>1.9.2</version>
 </dependency>
+	  
+	  <!-- https://mvnrepository.com/artifact/javax.naming/jndi -->
+<dependency>
+    <groupId>javax.naming</groupId>
+    <artifactId>jndi</artifactId>
+    <version>1.2.1</version>
+</dependency>
+
 	
   </dependencies>
 </project>
