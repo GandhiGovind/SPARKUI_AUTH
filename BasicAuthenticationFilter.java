@@ -67,11 +67,23 @@ public class BasicAuthenticationFilter implements Filter {
 						if (p != -1) {
 							String _username = credentials.substring(0, p).trim();
 							String _password = credentials.substring(p + 1).trim();
+							if (_username.equals("admin"))
+							{   
+								if (!username.equals(_username) || !password.equals(_password)) {
+									unauthorized(response, "Bad credentials");
+									}
+							}
+							else{
 							LDAPUserAuthentication ldapUserAuthentication=new LDAPUserAuthentication()
 							String status=ldapUserAuthentication.authenticateUser(_username,_password);
+							if (!status.equalsIgnoreCase("SUCCESS"))
+							{
+							unauthorized(response, "Bad credentials");
+							}
 							
 							if (!username.equals(_username) || !password.equals(_password)) {
 								unauthorized(response, "Bad credentials");
+							}
 							}
 
 							filterChain.doFilter(servletRequest, servletResponse);
