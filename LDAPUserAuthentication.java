@@ -39,7 +39,7 @@ public class LDAPUserAuthentication {
 					"com.sun.jndi.ldap.LdapCtxFactory");
 			env.put(Context.PROVIDER_URL, SPARKUIConstant.PROVIDER_URL);
 			// env.put(Context.SECURITY_AUTHENTICATION, "simple");
-			// env.put(Context.SECURITY_PRINCIPAL, "uid=1535141");
+			// env.put(Context.SECURITY_PRINCIPAL, "uid=<userid>");
 			env.put(Context.SECURITY_PRINCIPAL, "cn=" + username
 					+ ",ou=users,o=standardchartered");
 			env.put(Context.SECURITY_CREDENTIALS, password);
