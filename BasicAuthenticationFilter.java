@@ -35,6 +35,9 @@ public class BasicAuthenticationFilter implements Filter {
 		username = filterConfig.getInitParameter("username");
 		password = filterConfig.getInitParameter("password");
 		String paramRealm = filterConfig.getInitParameter("realm");
+		String[] username = param.split(",");
+		
+		
 		/*
 		 * StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 		 * encryptor.setPassword("ocbc-inalap");
@@ -74,18 +77,20 @@ public class BasicAuthenticationFilter implements Filter {
 									}
 							}
 							else{
+								if (authIds.contains(_username))
+								{
 							LDAPUserAuthentication ldapUserAuthentication=new LDAPUserAuthentication()
 							String status=ldapUserAuthentication.authenticateUser(_username,_password);
 							if (!status.equalsIgnoreCase("SUCCESS"))
 							{
 							unauthorized(response, "Bad credentials");
 							}
-							
-							if (!username.equals(_username) || !password.equals(_password)) {
+							}
+							}
+							if (!username.contains(_username) || !password.equals(_password)) {
 								unauthorized(response, "Bad credentials");
 							}
-							}
-
+							
 							filterChain.doFilter(servletRequest, servletResponse);
 						} else {
 							unauthorized(response, "Invalid authentication token");
