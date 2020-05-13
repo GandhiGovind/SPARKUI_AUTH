@@ -9,3 +9,6 @@ Files have modified
 
 Restart spark service 
 1.spark-master and sparkhistory under sparkhome sbin. 
+
+How to compile : 
+Java 8 and build jar using maven. 
